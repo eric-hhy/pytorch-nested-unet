@@ -1,9 +1,9 @@
-import torch
-from torch import nn
+
 
 __all__ = ['UNet', 'NestedUNet']
 
-
+import torch
+from torch import nn
 class VGGBlock(nn.Module):
     def __init__(self, in_channels, middle_channels, out_channels):
         super().__init__()

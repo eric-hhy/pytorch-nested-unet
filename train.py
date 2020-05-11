@@ -24,7 +24,6 @@ from utils import AverageMeter, str2bool
 ARCH_NAMES = archs.__all__
 LOSS_NAMES = losses.__all__
 LOSS_NAMES.append('BCEWithLogitsLoss')
-#test123
 
 def parse_args():
     parser = argparse.ArgumentParser()
