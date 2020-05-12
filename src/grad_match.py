@@ -219,6 +219,8 @@ class GradientMatch():
         print('\nsaving sample ' + name)
         images.save(name)
 
+    def scale(self, tensor):
+        return F.interpolate(tensor, scale_factor=self.config.SCALE)
 
     def log(self, logs):
         with open(self.log_file, 'a') as f:
