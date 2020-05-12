@@ -251,7 +251,7 @@ class UnetModel(BaseModel):
         #mse_loss
         #mse_loss = self.MSE_loss(outputs, hr_images)
 
-        l_loss = self.config.L1_LOSS_WEIGHT*self.L1_loss(outputs, hr_image)
+        l_loss = self.config.L1_LOSS_WEIGHT*self.L1_loss(outputs, hr_images)
 
         #mge_loss
         fake_grads = self.get_grad.forward(outputs)
