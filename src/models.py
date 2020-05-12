@@ -284,7 +284,6 @@ class UnetModel(BaseModel):
 
         # create logs
         logs = [
-            ("l_mse", mse_loss.item()),
             ("l_mge", mge_loss.item()),
             ("l_mix", mix_loss.item())
             ]
