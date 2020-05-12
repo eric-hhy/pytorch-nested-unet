@@ -10,7 +10,7 @@ from skimage.color import rgb2gray
 from PIL import Image
 import matplotlib.pyplot as plt
 from .prepare_images import Prepare_img
-from .util import Get_gradient
+from .utils import Get_gradient
 
 
 class Dataset(torch.utils.data.Dataset):
