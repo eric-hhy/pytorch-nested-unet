@@ -19,7 +19,11 @@ class VGGBlock(nn.Module):
         self.bn2 = nn.BatchNorm2d(out_channels)
 
     def forward(self, x):
-        out = self.conv2(x)
+        
+        out = self.conv1(x)
+        out = self.relu(out)
+        
+        out = self.conv2(out)
         out = self.relu(out)
 
         return out
@@ -127,8 +131,8 @@ class NestedUNet(BaseNet):
     def __init__(self, config, input_channels = 3):
         super().__init__()
 
-        #nb_filter = [32, 64, 128, 256, 512, 8, 16]
-        nb_filter = [64, 128, 256, 512, 1024, 16, 32]
+        nb_filter = [32, 64, 128, 256, 512, 8, 16]
+        #nb_filter = [64, 128, 256, 512, 1024, 16, 32]
 
         self.pool = nn.MaxPool2d(2, 2)
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)

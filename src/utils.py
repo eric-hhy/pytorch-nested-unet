@@ -12,12 +12,12 @@ from PIL import Image
 class Get_gradient(nn.Module):
     def __init__(self):
         super().__init__()
-        kernel_v = [[0, -1, 0], 
+        kernel_v = [[-1, -2, -1], 
                     [0, 0, 0], 
-                    [0, 1, 0]]
-        kernel_h = [[0, 0, 0], 
-                    [-1, 0, 1], 
-                    [0, 0, 0]]
+                    [1, 2, 1]]
+        kernel_h = [[-1, 0, 1], 
+                    [-2, 0, 2], 
+                    [-1, 0, 1]]
         kernel_h = torch.FloatTensor(kernel_h).unsqueeze(0).unsqueeze(0)
         kernel_v = torch.FloatTensor(kernel_v).unsqueeze(0).unsqueeze(0)
         self.weight_h = nn.Parameter(data = kernel_h, requires_grad = False).cuda()
