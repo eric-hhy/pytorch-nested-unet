@@ -209,8 +209,8 @@ class UnetModel(BaseModel):
 
         #loss functions
         self.MSE_loss = nn.MSELoss()
-        self.content_loss = ContentLoss()
-        self.style_loss = StyleLoss()
+        content_loss = ContentLoss()
+        style_loss = StyleLoss()
 
         #gradient
         self.get_grad = Get_gradient()
