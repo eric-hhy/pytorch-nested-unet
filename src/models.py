@@ -208,6 +208,7 @@ class UnetModel(BaseModel):
         self.unet = NestedUNet(config)
 
         #loss functions
+        L1_loss = nn.L1Loss()
         self.MSE_loss = nn.MSELoss()
         content_loss = ContentLoss()
         style_loss = StyleLoss()
@@ -217,6 +218,7 @@ class UnetModel(BaseModel):
 
         self.add_module('unet', self.unet)
 
+        self.add_module("L1_loss", L1_loss)
         self.add_module("MSE_loss", self.MSE_loss)
         self.add_module('content_loss', content_loss)
         self.add_module('style_loss', style_loss)
@@ -247,7 +249,9 @@ class UnetModel(BaseModel):
         outputs = self.forward(lr_images)
 
         #mse_loss
-        mse_loss = self.MSE_loss(outputs, hr_images)
+        #mse_loss = self.MSE_loss(outputs, hr_images)
+
+        l_loss = self.config.L1_LOSS_WEIGHT*self.L1_loss(outputs, hr_image)
 
         #mge_loss
         fake_grads = self.get_grad.forward(outputs)
@@ -261,7 +265,7 @@ class UnetModel(BaseModel):
         s_loss = self.config.STYLE_LOSS_WEIGHT*self.style_loss(outputs, hr_images)
 
         #mix_loss
-        mix_loss = mse_loss + self.config.MGE_LOSS_WEIGHT*mge_loss + c_loss + s_loss
+        mix_loss = l_loss + self.config.MGE_LOSS_WEIGHT*mge_loss + c_loss + s_loss
 
         # L1 loss
         #gen_l1_loss = self.L1_loss(outputs, hr_images) * self.config.L1_LOSS_WEIGHT
