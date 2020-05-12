@@ -82,7 +82,7 @@ class BaseNet(nn.Module):
                     nn.init.constant_(module.bias.data, 0.0)
 
             elif classname.find("BatchNorm2d") != -1:
-                nn.init.normal_(module.weight.data, 1.0, gain = gain)
+                nn.init.normal_(module.weight.data, 1.0, std = gain)
                 nn.init.constant_(module.bias.data, 0.0)
 
         self.apply(init_func)
