@@ -21,22 +21,19 @@ class GradientMatch():
         self.psnr = PSNR(255.0).to(config.DEVICE)
 
         self.train_dataset = Dataset(list_folder = config.LIST_FOLDER, 
-                                     mode = "train", 
-                                     sigma = config.SIGMA, 
+                                     mode = "train",  
                                      crop_size = config.CROP_SIZE, 
                                      scale = config.SCALE
                                      )
         
         self.test_dataset = Dataset(list_folder = config.LIST_FOLDER, 
-                                     mode = "test", 
-                                     sigma = config.SIGMA, 
+                                     mode = "test",  
                                      crop_size = config.CROP_SIZE, 
                                      scale = config.SCALE
                                      )
 
         self.val_dataset = Dataset(list_folder = config.LIST_FOLDER, 
-                                     mode = "eval", 
-                                     sigma = config.SIGMA, 
+                                     mode = "eval",  
                                      crop_size = config.CROP_SIZE, 
                                      scale = config.SCALE
                                      )
