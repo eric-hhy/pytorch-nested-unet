@@ -53,6 +53,7 @@ class Config(dict):
     'ADV_LOSS_WEIGHT1': 0.1,        # edge model adversarial loss weight
     'ADV_LOSS_WEIGHT2': 1,          # SR model adversarial loss weight
     'GAN_LOSS': 'hinge',            # nsgan | lsgan | hinge
+    'MGE_LOSS_WEIGHT': 0.1,         #mge loss weight
 
     'SAVE_INTERVAL': 1000,          # how many iterations to wait before saving model (0: never)
     'SAMPLE_INTERVAL': 1000,        # how many iterations to wait before sampling (0: never)
