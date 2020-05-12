@@ -137,8 +137,8 @@ class NestedUNet(BaseNet):
         self.pool = nn.MaxPool2d(2, 2)
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
 
-        self.convb0_5 = VGGBlock(input_channels, nb_filters[-1], nb_filters[-1])
-        self.convb0_6 = VGGBlock(nb_filters[-1], nb_filters[-2], nb.filters[-2])
+        self.convb0_5 = VGGBlock(input_channels, nb_filter[-1], nb_filter[-1])
+        self.convb0_6 = VGGBlock(nb_filter[-1], nb_filter[-2], nb.filter[-2])
 
         self.conv0_0 = VGGBlock(input_channels, nb_filter[0], nb_filter[0])
         self.conv1_0 = VGGBlock(nb_filter[0], nb_filter[1], nb_filter[1])
@@ -160,8 +160,8 @@ class NestedUNet(BaseNet):
 
         self.conv0_4 = VGGBlock(nb_filter[0]*4+nb_filter[1], nb_filter[0], nb_filter[0])
 
-        self.conv0_5 = VGGBlock(nb_filter[-1]+nb_filter[0], nb_filter[-1], nb_filters[-1])
-        self.conv0_6 = VGGBlock(nb_filter[-2]+nb_filter[-1], nb_filter[-2], nb_filters[-2])
+        self.conv0_5 = VGGBlock(nb_filter[-1]+nb_filter[0], nb_filter[-1], nb_filter[-1])
+        self.conv0_6 = VGGBlock(nb_filter[-2]+nb_filter[-1], nb_filter[-2], nb_filter[-2])
 
         self.final = nn.Conv2d(nb_filter[-2], input_channels, kernel_size=1)
         
