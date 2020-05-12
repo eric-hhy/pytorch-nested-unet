@@ -205,7 +205,7 @@ class UnetModel(BaseModel):
         self.config = config
 
         #components
-        self.unet = NestedUnet(config)
+        self.unet = NestedUNet(config)
 
         #loss functions
         self.MSE_loss = nn.MSELoss()
