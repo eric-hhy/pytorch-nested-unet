@@ -6,7 +6,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from .dataset import Dataset
-#from .loss import AdversarialLoss, ContentLoss, StyleLoss
+from .loss import ContentLoss, StyleLoss
 from .utils import Get_gradient
 
 class VGGBlock(nn.Module):
@@ -209,6 +209,8 @@ class UnetModel(BaseModel):
 
         #loss functions
         self.MSE_loss = nn.MSELoss()
+        self.content_loss = ContentLoss()
+        self.style_loss = StyleLoss()
 
         #gradient
         self.get_grad = Get_gradient()
@@ -216,6 +218,9 @@ class UnetModel(BaseModel):
         self.add_module('unet', self.unet)
 
         self.add_module("MSE_loss", self.MSE_loss)
+        self.add_module('content_loss', content_loss)
+        self.add_module('style_loss', style_loss)
+        
         self.add_module("get_grad", self.get_grad)
 
         self.optimizer = optim.Adam(
@@ -240,19 +245,23 @@ class UnetModel(BaseModel):
 
         # process outputs
         outputs = self.forward(lr_images)
-        mse_loss = 0
-        mge_loss = 0
 
         #mse_loss
-        mse_loss += self.MSE_loss(outputs, hr_images)
+        mse_loss = self.MSE_loss(outputs, hr_images)
 
         #mge_loss
         fake_grads = self.get_grad.forward(outputs)
         hr_grads = self.get_grad.forward(hr_images)
-        mge_loss += self.MSE_loss(fake_grads, hr_grads)
+        mge_loss = self.MSE_loss(fake_grads, hr_grads)
+
+        #content loss
+        c_loss = self.config.CONTENT_LOSS_WEIGHT*self.content_loss(outputs, hr_images)
+
+        #style loss
+        s_loss = self.config.STYLE_LOSS_WEIGHT*self.style_loss(outputs, hr_images)
 
         #mix_loss
-        mix_loss = mse_loss + self.config.MGE_LOSS_WEIGHT*mge_loss
+        mix_loss = mse_loss + self.config.MGE_LOSS_WEIGHT*mge_loss + c_loss + s_loss
 
         # L1 loss
         #gen_l1_loss = self.L1_loss(outputs, hr_images) * self.config.L1_LOSS_WEIGHT
