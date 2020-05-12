@@ -138,7 +138,7 @@ class NestedUNet(BaseNet):
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
 
         self.convb0_5 = VGGBlock(input_channels, nb_filter[-1], nb_filter[-1])
-        self.convb0_6 = VGGBlock(nb_filter[-1], nb_filter[-2], nb.filter[-2])
+        self.convb0_6 = VGGBlock(nb_filter[-1], nb_filter[-2], nb_filter[-2])
 
         self.conv0_0 = VGGBlock(input_channels, nb_filter[0], nb_filter[0])
         self.conv1_0 = VGGBlock(nb_filter[0], nb_filter[1], nb_filter[1])
