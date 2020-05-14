@@ -29,10 +29,10 @@ class VGGBlock(nn.Module):
         return out
 
 class VGGBlock_oneconv(nn.Module):
-    def __init__(self, in_channels, middle_channels, out_channels):
+    def __init__(self, in_channels, out_channels):
         super().__init__()
         self.relu = nn.ReLU(inplace=True)
-        self.conv1 = nn.Conv2d(in_channels, middle_channels, 3, padding=1)
+        self.conv1 = nn.Conv2d(in_channels, out_channels, 3, padding=1)
 
     def forward(self, x):
         
@@ -109,22 +109,22 @@ class UNet(BaseNet):
         self.pool = nn.MaxPool2d(2, 2)
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
 
-        self.convb0_5 = VGGBlock_oneconv(input_channels, nb_filter[-1], nb_filter[-1])
-        self.convb0_6 = VGGBlock_oneconv(nb_filter[-1], nb_filter[-2], nb_filter[-2])
+        self.convb0_5 = VGGBlock_oneconv(input_channels, nb_filter[-1])
+        self.convb0_6 = VGGBlock_oneconv(nb_filter[-1], nb_filter[-2])
 
-        self.conv0_0 = VGGBlock_oneconv(input_channels, nb_filter[0], nb_filter[0])
-        self.conv1_0 = VGGBlock_oneconv(nb_filter[0], nb_filter[1], nb_filter[1])
-        self.conv2_0 = VGGBlock_oneconv(nb_filter[1], nb_filter[2], nb_filter[2])
-        self.conv3_0 = VGGBlock_oneconv(nb_filter[2], nb_filter[3], nb_filter[3])
-        self.conv4_0 = VGGBlock_oneconv(nb_filter[3], nb_filter[4], nb_filter[4])
+        self.conv0_0 = VGGBlock_oneconv(input_channels, nb_filter[0])
+        self.conv1_0 = VGGBlock_oneconv(nb_filter[0], nb_filter[1])
+        self.conv2_0 = VGGBlock_oneconv(nb_filter[1], nb_filter[2])
+        self.conv3_0 = VGGBlock_oneconv(nb_filter[2], nb_filter[3])
+        self.conv4_0 = VGGBlock_oneconv(nb_filter[3], nb_filter[4])
 
-        self.conv3_1 = VGGBlock_oneconv(nb_filter[3]+nb_filter[4], nb_filter[3], nb_filter[3])
-        self.conv2_2 = VGGBlock_oneconv(nb_filter[2]+nb_filter[3], nb_filter[2], nb_filter[2])
-        self.conv1_3 = VGGBlock_oneconv(nb_filter[1]+nb_filter[2], nb_filter[1], nb_filter[1])
-        self.conv0_4 = VGGBlock_oneconv(nb_filter[0]+nb_filter[1], nb_filter[0], nb_filter[0])
+        self.conv3_1 = VGGBlock_oneconv(nb_filter[3]+nb_filter[4], nb_filter[3])
+        self.conv2_2 = VGGBlock_oneconv(nb_filter[2]+nb_filter[3], nb_filter[2])
+        self.conv1_3 = VGGBlock_oneconv(nb_filter[1]+nb_filter[2], nb_filter[1])
+        self.conv0_4 = VGGBlock_oneconv(nb_filter[0]+nb_filter[1], nb_filter[0])
 
-        self.conv0_5 = VGGBlock(nb_filter[-1]+nb_filter[0], nb_filter[-1], nb_filter[-1])
-        self.conv0_6 = VGGBlock(nb_filter[-2]+nb_filter[-1], nb_filter[-2], nb_filter[-2])
+        self.conv0_5 = VGGBlock(nb_filter[-1]+nb_filter[0], nb_filter[-1])
+        self.conv0_6 = VGGBlock(nb_filter[-2]+nb_filter[-1], nb_filter[-2])
 
         self.final = nn.Conv2d(nb_filter[-2], input_channels, kernel_size=1)
 
