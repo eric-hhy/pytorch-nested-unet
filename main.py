@@ -5,7 +5,7 @@ import random
 import numpy as np
 from shutil import copyfile
 from src.config import Config
-from src.grad_match import GradientMatch
+from src.grad_match import GradientMatch, GradientMatch2
 from src.create_data_list import create_data_list
 
 def load_config(mode = None):
@@ -66,7 +66,7 @@ def main(mode = None):
     np.random.seed(config.SEED)
     random.seed(config.SEED)
 
-    model = GradientMatch(config)
+    model = GradientMatch2(config)
     model.load()
 
     # model training
