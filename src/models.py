@@ -101,7 +101,7 @@ class BaseNet(nn.Module):
 
 
 class UNet(BaseNet):
-    def __init__(self, input_channels=3, **kwargs):
+    def __init__(self, config, input_channels=3):
         super().__init__()
 
         nb_filter = [64, 128, 256, 512, 1024, 16, 32]
