@@ -123,8 +123,8 @@ class UNet(BaseNet):
         self.conv1_3 = VGGBlock_oneconv(nb_filter[1]+nb_filter[2], nb_filter[1])
         self.conv0_4 = VGGBlock_oneconv(nb_filter[0]+nb_filter[1], nb_filter[0])
 
-        self.conv0_5 = VGGBlock(nb_filter[-1]+nb_filter[0], nb_filter[-1])
-        self.conv0_6 = VGGBlock(nb_filter[-2]+nb_filter[-1], nb_filter[-2])
+        self.conv0_5 = VGGBlock_oneconv(nb_filter[-1]+nb_filter[0], nb_filter[-1])
+        self.conv0_6 = VGGBlock_oneconv(nb_filter[-2]+nb_filter[-1], nb_filter[-2])
 
         self.final = nn.Conv2d(nb_filter[-2], input_channels, kernel_size=1)
 
