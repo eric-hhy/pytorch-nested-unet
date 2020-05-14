@@ -71,6 +71,36 @@ class BaseModel(nn.Module):
             "unet": self.unet.state_dict()
             }, self.unet_weights_path)
 
+class BaseModel2(nn.Module):
+    def __init__(self, name, config):
+        super().__init__()
+
+        self.name = name
+        self.config = config
+        self.iteration = 0
+
+        self.unet_weights_path = os.path.join(config.PATH, name+".pth")
+
+    def load(self):
+        if os.path.exists(self.unet_weights_path):
+            print("Loading ...{}".format(self.name))
+
+            if torch.cuda.is_available():
+                data = torch.load(self.unet_weights_path)
+            else:
+                data = torch.load(self.unet_weights_path, map_location = lambda storage, loc:storage)
+
+            self.unet2.load_state_dict(data["unet"])
+            self.iteration = data["iteration"]
+
+    def save(self):
+        print("Saving...{}...".format(self.name))
+
+        torch.save({
+            "iteration": self.iteration,
+            "unet": self.unet2.state_dict()
+            }, self.unet_weights_path)
+
 class BaseNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -315,7 +345,7 @@ class UnetModel(BaseModel):
 
         return outputs, hr_grads, mix_loss, logs
 
-class UnetModel2(BaseModel):
+class UnetModel2(BaseModel2):
     def __init__(self, config):
         super().__init__("unet2", config)
 
