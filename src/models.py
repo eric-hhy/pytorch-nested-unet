@@ -396,14 +396,15 @@ class UnetModel2(BaseModel2):
         outputs = self.forward(lr_images)
 
         #mse_loss
-        mse_loss = self.MSE_loss(outputs, hr_images)
+        #mse_loss = self.MSE_loss(outputs, hr_images)
 
-        #l_loss = self.config.L1_LOSS_WEIGHT*self.L1_loss(outputs, hr_images)
+        l_loss = self.config.L1_LOSS_WEIGHT*self.L1_loss(outputs, hr_images)
 
         #mge_loss
         fake_grads = self.get_grad.forward(outputs)
         hr_grads = self.get_grad.forward(hr_images)
-        mge_loss = self.MSE_loss(fake_grads, hr_grads)
+        #mge_loss = self.MSE_loss(fake_grads, hr_grads)
+        l_grad_loss = self.L1_loss(face_grads, hr_grads)
 
         #content loss
         #c_loss = self.config.CONTENT_LOSS_WEIGHT*self.content_loss(outputs, hr_images)
@@ -412,7 +413,7 @@ class UnetModel2(BaseModel2):
         #s_loss = self.config.STYLE_LOSS_WEIGHT*self.style_loss(outputs, hr_images)
 
         #mix_loss
-        mix_loss = mse_loss + self.config.MGE_LOSS_WEIGHT*mge_loss 
+        mix_loss = l_loss + self.config.MGE_LOSS_WEIGHT*l_grad_loss 
 
         # L1 loss
         #gen_l1_loss = self.L1_loss(outputs, hr_images) * self.config.L1_LOSS_WEIGHT
@@ -431,8 +432,8 @@ class UnetModel2(BaseModel2):
 
         # create logs
         logs = [
-            ("l_mse", mse_loss.item()),
-            ("l_mge", mge_loss.item()),
+            ("l_loss", l_loss.item()),
+            ("l_grad_loss", l_grad_loss.item()),
             ("l_mix", mix_loss.item())
             ]
 
