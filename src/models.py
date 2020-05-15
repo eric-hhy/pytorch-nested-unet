@@ -404,7 +404,7 @@ class UnetModel2(BaseModel2):
         fake_grads = self.get_grad.forward(outputs)
         hr_grads = self.get_grad.forward(hr_images)
         #mge_loss = self.MSE_loss(fake_grads, hr_grads)
-        l_grad_loss = self.L1_loss(face_grads, hr_grads)
+        l_grad_loss = self.L1_loss(fake_grads, hr_grads)
 
         #content loss
         #c_loss = self.config.CONTENT_LOSS_WEIGHT*self.content_loss(outputs, hr_images)
