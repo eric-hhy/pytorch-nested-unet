@@ -66,7 +66,7 @@ def main(mode = None):
     np.random.seed(config.SEED)
     random.seed(config.SEED)
 
-    model = GradientMatch2(config)
+    model = GradientMatch(config)
     model.load()
 
     # model training
