@@ -57,6 +57,9 @@ class Dataset(torch.utils.data.Dataset):
         """
         return len(self.ori_imgs)
 
+    def load_name(self, index):
+        name = self.ori_imgs[index]
+        return os.path.basename(name)
 
     def create_iterator(self, batch_size):
         while True:

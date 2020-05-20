@@ -170,18 +170,19 @@ class GradientMatch():
         )
 
         index = 0
-        for items in test_loader:
-            name = self.test_dataset.load_name(index)
-            lr_images, hr_images = self.cuda(*items)
-            index += 1
+        with torch.no_grad():
+            for items in test_loader:
+                name = self.test_dataset.load_name(index)
+                lr_images, hr_images = self.cuda(*items)
+                index += 1
 
-            outputs = self.unet_model.forward(lr_images)
+                outputs = self.unet_model.forward(lr_images)
 
-            output = self.postprocess(outputs)[0]
-            path = os.path.join(self.results_path, name)
-            print(index, name)
+                output = self.postprocess(outputs)[0]
+                path = os.path.join(self.results_path, name)
+                print(index, name)
 
-            imsave(output, path)
+                imsave(output, path)
 
         print('\nEnd test....')
 
@@ -396,18 +397,19 @@ class GradientMatch2():
         )
 
         index = 0
-        for items in test_loader:
-            name = self.test_dataset.load_name(index)
-            lr_images, hr_images = self.cuda(*items)
-            index += 1
+        with torch.no_grad():
+            for items in test_loader:
+                name = self.test_dataset.load_name(index)
+                lr_images, hr_images = self.cuda(*items)
+                index += 1
 
-            outputs = self.unet_model.forward(lr_images)
+                outputs = self.unet_model.forward(lr_images)
 
-            output = self.postprocess(outputs)[0]
-            path = os.path.join(self.results_path, name)
-            print(index, name)
+                output = self.postprocess(outputs)[0]
+                path = os.path.join(self.results_path, name)
+                print(index, name)
 
-            imsave(output, path)
+                imsave(output, path)
 
         print('\nEnd test....')
 
