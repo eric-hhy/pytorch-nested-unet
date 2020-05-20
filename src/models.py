@@ -165,10 +165,15 @@ class UNet(BaseNet):
         xb0_6 = self.convb0_6(self.up(xb0_5))
         
         x0_0 = self.conv0_0(input)
+        print(x0_0.shape)
         x1_0 = self.conv1_0(self.pool(x0_0))
+        print(x1_0.shape)
         x2_0 = self.conv2_0(self.pool(x1_0))
+        print(x2_0.shape)
         x3_0 = self.conv3_0(self.pool(x2_0))
+        print(x3_0.shape)
         x4_0 = self.conv4_0(self.pool(x3_0))
+        print(x4_0.shape)
 
         x3_1 = self.conv3_1(torch.cat([x3_0, self.up(x4_0)], 1))
         x2_2 = self.conv2_2(torch.cat([x2_0, self.up(x3_1)], 1))
