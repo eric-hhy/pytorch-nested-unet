@@ -403,6 +403,7 @@ class GradientMatch2():
                 lr_images, hr_images = self.cuda(*items)
                 index += 1
 
+                print(index, name)
                 outputs = self.unet_model.forward(lr_images)
 
                 output = self.postprocess(outputs)[0]
