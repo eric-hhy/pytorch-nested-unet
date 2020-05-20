@@ -25,8 +25,8 @@ class Prepare_img():
             hr_img = img.crop((left, top, right, bottom))
         else:
             # Take the largest possible center-crop of it such that its dimensions are perfectly divisible by the scaling factor
-            x_remainder = img.width % 16
-            y_remainder = img.height % 16
+            x_remainder = img.width % 64
+            y_remainder = img.height % 64
             left = x_remainder // 2
             top = y_remainder // 2
             right = left + (img.width - x_remainder)
